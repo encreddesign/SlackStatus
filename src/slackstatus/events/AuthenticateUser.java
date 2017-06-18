@@ -7,9 +7,12 @@ package slackstatus.events;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import slackstatus.SlackHttpThread;
+import slackstatus.SlackStatus;
+import slackstatus.views.SlackView;
 
 /**
  *
@@ -17,18 +20,17 @@ import slackstatus.SlackHttpThread;
  */
 public class AuthenticateUser implements EventHandler {
     
-    protected volatile Thread mDaemonThread;
-    
     private final Label mSlackErrorLabel;
     private final TextField mSlackAuthCodeField;
     
-    public AuthenticateUser (TextField codeField, Label errorLabel) {
+    private final SlackView mSlackView;
+    
+    public AuthenticateUser (SlackView view) {
         
-        this.mDaemonThread = new SlackHttpThread();
-        this.mDaemonThread.setDaemon(true);
+        this.mSlackView = view;
         
-        this.mSlackErrorLabel = errorLabel;
-        this.mSlackAuthCodeField = codeField;
+        this.mSlackErrorLabel = view.mSlackErrorLabel;
+        this.mSlackAuthCodeField = view.mSlackCodeField;
         
     }
 
@@ -41,14 +43,43 @@ public class AuthenticateUser implements EventHandler {
                 throw new Exception("Authentication code is needed");
             }
             
-            this.mDaemonThread.start();
+            this.updateElementState(event, true, "Signing In...");
+            this.handleDaemonThread();
             
         } catch (Exception ex) {
             
             this.errorUi(ex.getMessage());
+            this.updateElementState(event, false, "Add User");
+            
             System.err.println("Error: " + ex.getMessage());
             
         }
+        
+    }
+    
+    private void updateElementState (Event event, boolean disabled, String message) {
+        
+        final Button button = ((Button) event.getSource());
+        
+        button.setDisable(disabled);
+        button.setText(message);
+        
+    }
+    
+    private void handleDaemonThread () {
+        
+        final SlackHttpThread httpThread = new SlackHttpThread(this.mSlackView);
+        
+        httpThread.setDaemon(true);
+        
+        httpThread.setUrl(SlackStatus.SLACK_TOKEN_URL);
+        httpThread.addParam("client_id", SlackStatus.SLACK_CLIENT_ID);
+        httpThread.addParam("client_secret", SlackStatus.SLACK_CLIENT_SECRET);
+        httpThread.addParam("code", this.mSlackAuthCodeField.getText().trim());
+        
+        httpThread.setCallback(new ServerAPIResponse());
+        
+        httpThread.start();
         
     }
     

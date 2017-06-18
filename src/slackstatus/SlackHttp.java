@@ -8,7 +8,6 @@ package slackstatus;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import javafx.scene.control.Label;
 import javax.net.ssl.HttpsURLConnection;
 
 /**

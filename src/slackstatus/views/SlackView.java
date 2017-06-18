@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package slackstatus;
+package slackstatus.views;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -21,16 +20,16 @@ import slackstatus.events.CollectAuthCode;
  *
  * @author Joshua
  */
-public class SlackView extends GridPane {
+public class SlackView extends SlackAbstractView {
     
-    private final TextField mSlackCodeField;
+    public final TextField mSlackCodeField;
     
-    private final Label mSlackCodeFieldLabel;
-    private final Label mSlackErrorLabel;
+    public final Label mSlackCodeFieldLabel;
+    public final Label mSlackErrorLabel;
     
     private final Hyperlink mSlackInfoLabel;
     
-    private final Button mSlackCommitButton;
+    public final Button mSlackCommitButton;
     
     private final Text mSlackPageTitle;
     
@@ -60,7 +59,7 @@ public class SlackView extends GridPane {
         this.mSlackErrorLabel.setWrapText(true);
         this.mSlackErrorLabel.setTextFill(Color.web("#f4424b"));
         
-        this.mSlackCommitButton.setOnAction(new AuthenticateUser(this.mSlackCodeField, this.mSlackErrorLabel));
+        this.mSlackCommitButton.setOnAction(new AuthenticateUser(this));
         
         this.add(this.mSlackPageTitle, 0, 0);
         this.add(this.mSlackCodeField, 0, 3);

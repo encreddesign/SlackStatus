@@ -3,6 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Joshua/Documents/EncredDesign/Software/Apps/SlackStatus/src/slackstatus/views/SlackView.java</file>
+            <file>file:/C:/Users/Joshua/Documents/EncredDesign/Software/Apps/SlackStatus/src/slackstatus/views/SlackSignedInView.java</file>
+            <file>file:/C:/Users/Joshua/Documents/EncredDesign/Software/Apps/SlackStatus/src/slackstatus/events/AuthenticateUser.java</file>
+            <file>file:/C:/Users/Joshua/Documents/EncredDesign/Software/Apps/SlackStatus/src/slackstatus/SlackHttpThread.java</file>
+            <file>file:/C:/Users/Joshua/Documents/EncredDesign/Software/Apps/SlackStatus/src/slackstatus/events/SignedInCallback.java</file>
+            <file>file:/C:/Users/Joshua/Documents/EncredDesign/Software/Apps/SlackStatus/src/slackstatus/events/ServerAPIResponse.java</file>
+            <file>file:/C:/Users/Joshua/Documents/EncredDesign/Software/Apps/SlackStatus/src/slackstatus/SlackApplication.java</file>
             <file>file:/C:/Users/Joshua/Documents/EncredDesign/Software/Apps/SlackStatus/src/slackstatus/SlackStatus.java</file>
         </group>
     </open-files>

@@ -17,10 +17,14 @@ public class SlackStatus {
     
     public final static String SLACK_AUTH_URL = "https://slack.com/oauth/authorize";
     public final static String SLACK_TOKEN_URL = "https://slack.com/api/oauth.access";
+    public final static String SLACK_AUTH_TEST = "https://slack.com/api/auth.test";
     
     public final static String SLACK_CLIENT_ID = "";
     public final static String SLACK_CLIENT_SECRET = "";
-    public final static String SLACK_APP_SCOPE = "users:write";
+    public final static String SLACK_APP_SCOPE = "users:write+identify";
+    
+    public final static String APP_PREFS_NAME = "slackstatus.app.encreddesign";
+    public final static String APP_PREFS_TOKEN_KEY = "slack_token_key";
 
     public static void main(String[] args) {
         new SlackApplication().launchApp(args);
