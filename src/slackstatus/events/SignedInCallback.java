@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import slackstatus.SlackHttpInterface;
 import slackstatus.SlackStatus;
 import slackstatus.views.SlackAbstractView;
+import slackstatus.views.SlackLoadingView;
 import slackstatus.views.SlackSignedInView;
 
 /**
@@ -21,15 +22,30 @@ import slackstatus.views.SlackSignedInView;
  */
 public class SignedInCallback implements SlackHttpInterface {
     
+    private SlackLoadingView mSlackLoadingView;
     private SlackSignedInView mSlackSignedInView;
+    
+    @Override
+    public void PreResponse (SlackAbstractView view) {
+        
+        this.mSlackLoadingView = new SlackLoadingView();
+        this.mSlackLoadingView.setAlignment(Pos.CENTER);
+        this.mSlackLoadingView.setVgap(10);
+        this.mSlackLoadingView.setHgap(10);
+        this.mSlackLoadingView.setPadding(new Insets(25, 25, 25, 25));
+        
+        ((Stage) view.getScene().getWindow()).setScene(
+                new Scene(this.mSlackLoadingView, SlackStatus.APP_WIDTH, SlackStatus.APP_HEIGHT));
+        
+    }
 
     @Override
     public void OnResponse(SlackAbstractView view, HashMap<String, String> response) {
         
         if(response != null) {
             
-            if(response.get("error") != null) {
-                this.loadSignedInView(view, response);
+            if(response.get("team_id") != null) {
+                this.loadSignedInView(this.mSlackLoadingView, response);
             }
             
         }

@@ -38,6 +38,15 @@ public class SlackHttpThread extends Thread {
     @Override
     public void run() {
         
+        Platform.runLater(new Runnable(){
+
+            @Override
+            public void run() {
+                mSlackHttpInterface.PreResponse(mSlackAbstractView);
+            }
+            
+        });
+        
         final String response = SlackHttp.newInstance(this.mSlackQueryBuilder.getUrl())
                 .open().getResponse();
         

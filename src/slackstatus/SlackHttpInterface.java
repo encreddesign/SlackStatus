@@ -14,6 +14,8 @@ import slackstatus.views.SlackAbstractView;
  */
 public interface SlackHttpInterface {
     
+    public void PreResponse (SlackAbstractView view);
+    
     public void OnResponse (SlackAbstractView view, HashMap<String, String> response);
     
 }

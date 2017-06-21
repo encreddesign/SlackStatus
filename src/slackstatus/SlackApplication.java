@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 import static slackstatus.SlackStatus.APP_HEIGHT;
 import static slackstatus.SlackStatus.APP_WIDTH;
 import slackstatus.events.SignedInCallback;
-import slackstatus.views.SlackAbstractView;
 import slackstatus.views.SlackSignedInView;
 
 /**

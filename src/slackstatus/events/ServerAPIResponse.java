@@ -28,6 +28,9 @@ public class ServerAPIResponse implements SlackHttpInterface {
     private HashMap<String, String> mServerResponse;
     
     public ServerAPIResponse () {}
+    
+    @Override
+    public void PreResponse (SlackAbstractView view) {}
 
     @Override
     public void OnResponse (SlackAbstractView view, HashMap<String, String> response) {
