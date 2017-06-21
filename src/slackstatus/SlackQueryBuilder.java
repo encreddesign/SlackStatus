@@ -32,21 +32,7 @@ public class SlackQueryBuilder {
     }
     
     public String getUrl () {
-        return (this.mBaseUrl + "?" + this.joinArrayList());
-    }
-    
-    private String joinArrayList () {
-        
-        String joined = "";
-        
-        for(int i = 0; i < this.mQueryParams.size(); i++) {
-            
-            joined += (this.mQueryParams.get(i) + "&");
-            
-        }
-        
-        return joined.substring(0, (joined.length() - 1));
-        
+        return (this.mBaseUrl + "?" + SlackUtils.joinString(this.mQueryParams, "&"));
     }
     
     public static SlackQueryBuilder newInstance (String base_url) {

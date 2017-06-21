@@ -6,16 +6,13 @@
 package slackstatus;
 
 import java.util.prefs.Preferences;
-import slackstatus.views.SlackView;
 import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import static slackstatus.SlackStatus.APP_HEIGHT;
 import static slackstatus.SlackStatus.APP_WIDTH;
 import slackstatus.events.SignedInCallback;
-import slackstatus.views.SlackSignedInView;
+import slackstatus.views.SlackAbstractView;
 
 /**
  *
@@ -25,8 +22,7 @@ public class SlackApplication extends Application {
     
     private Scene mScene;
     
-    private SlackView mSlackView;
-    private SlackSignedInView mSlackSignedInView;
+    private PlaceholderView mPlaceholderView;
     
     private Preferences mSlackPrefs;
 
@@ -35,13 +31,9 @@ public class SlackApplication extends Application {
         
         stage.setTitle(SlackStatus.APP_TITLE);
         
-        this.mSlackView = new SlackView();
-        this.mSlackView.setAlignment(Pos.CENTER);
-        this.mSlackView.setVgap(10);
-        this.mSlackView.setHgap(10);
-        this.mSlackView.setPadding(new Insets(25, 25, 25, 25));
+        this.mPlaceholderView = new PlaceholderView();
         
-        this.mScene = new Scene(this.mSlackView, APP_WIDTH, APP_HEIGHT);
+        this.mScene = new Scene(this.mPlaceholderView, APP_WIDTH, APP_HEIGHT);
         stage.setScene(this.mScene);
         stage.show();
         
@@ -60,9 +52,10 @@ public class SlackApplication extends Application {
                 
             }
             
-        } catch (SecurityException ex) {
+        } catch (Exception ex) {
             
             System.err.println("Security Error: " + ex.getMessage());
+            ex.printStackTrace();
             
         }
         
@@ -70,7 +63,7 @@ public class SlackApplication extends Application {
     
     private void handleDaemonThread (String token) {
         
-        final SlackHttpThread httpThread = new SlackHttpThread(this.mSlackView);
+        final SlackHttpThread httpThread = new SlackHttpThread(this.mPlaceholderView);
         
         httpThread.setDaemon(true);
         
@@ -80,6 +73,12 @@ public class SlackApplication extends Application {
         httpThread.setCallback(new SignedInCallback());
         
         httpThread.start();
+        
+    }
+    
+    private final class PlaceholderView extends SlackAbstractView {
+        
+        public PlaceholderView () {}
         
     }
     

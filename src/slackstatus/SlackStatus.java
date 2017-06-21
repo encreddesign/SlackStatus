@@ -25,6 +25,7 @@ public class SlackStatus {
     
     public final static String APP_PREFS_NAME = "slackstatus.app.encreddesign";
     public final static String APP_PREFS_TOKEN_KEY = "slack_token_key";
+    public final static String APP_PREFS_DAYS_KEY = "slack_days_key";
 
     public static void main(String[] args) {
         new SlackApplication().launchApp(args);

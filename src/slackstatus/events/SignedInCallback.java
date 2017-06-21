@@ -15,6 +15,7 @@ import slackstatus.SlackStatus;
 import slackstatus.views.SlackAbstractView;
 import slackstatus.views.SlackLoadingView;
 import slackstatus.views.SlackSignedInView;
+import slackstatus.views.SlackView;
 
 /**
  *
@@ -22,6 +23,7 @@ import slackstatus.views.SlackSignedInView;
  */
 public class SignedInCallback implements SlackHttpInterface {
     
+    private SlackView mSlackView;
     private SlackLoadingView mSlackLoadingView;
     private SlackSignedInView mSlackSignedInView;
     
@@ -46,9 +48,24 @@ public class SignedInCallback implements SlackHttpInterface {
             
             if(response.get("team_id") != null) {
                 this.loadSignedInView(this.mSlackLoadingView, response);
+            } else {
+                this.loadSlackView(this.mSlackLoadingView);
             }
             
         }
+        
+    }
+    
+    void loadSlackView (SlackAbstractView view) {
+        
+        this.mSlackView = new SlackView();
+        this.mSlackView.setAlignment(Pos.CENTER);
+        this.mSlackView.setVgap(10);
+        this.mSlackView.setHgap(10);
+        this.mSlackView.setPadding(new Insets(25, 25, 25, 25));
+        
+        ((Stage) view.getScene().getWindow()).setScene(
+                new Scene(this.mSlackView, SlackStatus.APP_WIDTH, SlackStatus.APP_HEIGHT));
         
     }
     
