@@ -47,7 +47,7 @@ public class SlackHttpThread extends Thread {
             
         });
         
-        final String response = SlackHttp.newInstance(this.mSlackQueryBuilder.getUrl())
+        final String response = SlackHttp.newInstance(this.mSlackQueryBuilder)
                 .open().getResponse();
         
         if(response != null) {

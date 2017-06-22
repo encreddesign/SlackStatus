@@ -22,7 +22,7 @@ public class SlackJSONParser {
         this.mParser = new JSONParser();
     }
 
-    public HashMap<String, String> getHashMap ( String json ) {
+    public HashMap getHashMap ( String json ) {
 
         try {
 

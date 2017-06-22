@@ -31,6 +31,14 @@ public class SlackQueryBuilder {
         
     }
     
+    public String getParams () {
+        return SlackUtils.joinString(this.mQueryParams, "&");
+    }
+    
+    public String getBaseUrl () {
+        return this.mBaseUrl;
+    }
+    
     public String getUrl () {
         return (this.mBaseUrl + "?" + SlackUtils.joinString(this.mQueryParams, "&"));
     }

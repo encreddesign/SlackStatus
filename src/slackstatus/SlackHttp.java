@@ -6,6 +6,7 @@
 package slackstatus;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
@@ -16,18 +17,34 @@ import javax.net.ssl.HttpsURLConnection;
  */
 public class SlackHttp {
     
-    private final String mUrl;
+    private final SlackQueryBuilder mUrl;
     
-    private final String mMethod;
+    private String mMethod;
     
     private HttpsURLConnection mHttpsConnection;
     
     private String mHttpResponse;
     
-    private SlackHttp (String url) {
+    private SlackHttp (SlackQueryBuilder url) {
         
         this.mUrl = url;
         this.mMethod = "GET";
+        
+    }
+    
+    public SlackHttp get () {
+        
+        this.mMethod = "GET";
+        
+        return this;
+        
+    }
+    
+    public SlackHttp post () {
+        
+        this.mMethod = "POST";
+        
+        return this;
         
     }
     
@@ -35,10 +52,19 @@ public class SlackHttp {
         
         try {
             
-            final URL urlObj = new URL(this.mUrl);
+            final URL urlObj = new URL(
+                    (this.mMethod == "GET" ? this.mUrl.getUrl() : this.mUrl.getBaseUrl())
+            );
             this.mHttpsConnection = (HttpsURLConnection) urlObj.openConnection();
             
             this.mHttpsConnection.setRequestMethod(this.mMethod);
+            
+            if(this.mMethod == "POST") {
+                
+                this.mHttpsConnection.setDoOutput(true);
+                this.writePostData();
+                
+            }
             
             int code = this.mHttpsConnection.getResponseCode();
             if(code >= 400) {
@@ -81,7 +107,17 @@ public class SlackHttp {
         
     }
     
-    public static SlackHttp newInstance (String url) {
+    private void writePostData () throws Exception {
+        
+        final DataOutputStream output = new DataOutputStream(this.mHttpsConnection.getOutputStream());
+        
+        output.writeBytes(this.mUrl.getParams());
+        output.flush();
+        output.close();
+        
+    }
+    
+    public static SlackHttp newInstance (SlackQueryBuilder url) {
         return new SlackHttp(url);
     }
     
