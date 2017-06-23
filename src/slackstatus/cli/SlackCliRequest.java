@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cli;
+package slackstatus.cli;
 
 import slackstatus.SlackHttp;
 import slackstatus.SlackJSONParser;
@@ -25,12 +25,12 @@ public class SlackCliRequest {
         
     }
     
-    public void setPresence (boolean away) {
+    public void setPresence (boolean present) {
         
-        if(away) {
-            this.mSlackQuery.addParam("presence", "away");
-        } else {
+        if(present) {
             this.mSlackQuery.addParam("presence", "auto");
+        } else {
+            this.mSlackQuery.addParam("presence", "away");
         }
         
         final String response = SlackHttp.newInstance(this.mSlackQuery)

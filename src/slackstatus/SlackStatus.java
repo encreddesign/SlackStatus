@@ -5,7 +5,7 @@
  */
 package slackstatus;
 
-import cli.SlackCli;
+import slackstatus.cli.SlackCli;
 
 /**
  *

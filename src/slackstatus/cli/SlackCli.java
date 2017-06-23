@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cli;
+package slackstatus.cli;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -38,19 +38,45 @@ public class SlackCli {
             
             this.mSlackCliRequest = new SlackCliRequest(this.getSlackToken());
             
-            if(Arrays.asList(days).indexOf(currentDay) > -1) {
+            if(this.args.length == 2) {
                 
-                this.mSlackCliRequest.setPresence(true);
+                this.useForcedArgument(this.args[1]);
                 
             } else {
                 
-                this.mSlackCliRequest.setPresence(false);
+                if(Arrays.asList(days).indexOf(currentDay) > -1) {
+                
+                    this.mSlackCliRequest.setPresence(false);
+
+                } else {
+
+                    this.mSlackCliRequest.setPresence(true);
+
+                }
                 
             }
             
         } else {
             
             System.err.println("User not logged in Slack...please login");
+            
+        }
+        
+    }
+    
+    void useForcedArgument (String arg) {
+        
+        if(arg.equalsIgnoreCase("away")) {
+            
+            this.mSlackCliRequest.setPresence(false);
+            
+        } else if(arg.equalsIgnoreCase("auto")) {
+            
+            this.mSlackCliRequest.setPresence(true);
+            
+        } else {
+            
+            System.err.println("Presence argument not valid...should be [away] or [auto]");
             
         }
         
